@@ -13,14 +13,34 @@
     <img [src]="pokemonImage" [alt]="pokemon.name" />
 
     <ion-card-header>
-      <ion-card-title>{{ pokemon.name | titlecase }}</ion-card-title>
-      <ion-card-subtitle>#{{ pokemon.id }}</ion-card-subtitle>
+      <div class="pokemonName">
+        <ion-card-title>{{ pokemon.name | titlecase }}</ion-card-title>
+        <ion-card-subtitle>#{{ pokemon.id }}</ion-card-subtitle>
+        
+       <ion-button
+        expand="block"
+        fill="clear"
+        color="danger"
+        (click)="toggleFavorite()"
+        [title]="'Meu Pokémon favorito'"
+        class="favorite-button"
+      >
+       <ion-icon 
+          [name]="isFavorite() ? 'heart-dislike' : 'heart'"
+          slot="icon-only"
+        ></ion-icon>
+      </ion-button>
+
+      </div>
     </ion-card-header>
 
     <ion-card-content>
+      
       <p><strong>Tipo(s):</strong> {{ pokemonTypes }}</p>
       <p><strong>Peso:</strong> {{ pokemonWeightKg }}</p>
       <p><strong>Altura:</strong> {{ pokemonHeightMeters }}</p>
+      <p><strong>Habilidades:</strong> {{ pokemonAbilities }}</p>
+      <p><strong>Experiência base:</strong> {{ pokemon.base_experience }}</p>
 
       <div *ngIf="pokemonStats.length > 0">
         <p><strong>Status base:</strong></p>

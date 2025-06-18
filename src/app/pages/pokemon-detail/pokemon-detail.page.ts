@@ -2,28 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonCardContent
-} from '@ionic/angular/standalone';
+  IonContent,IonHeader,IonTitle, IonToolbar, IonButtons, IonBackButton,
+  IonCard,IonCardHeader,IonCardTitle,IonCardSubtitle,
+  IonCardContent, IonIcon, IonButton } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { PokeapiService } from 'src/app/services/pokeapi.service';
 import { RouterModule } from '@angular/router';
+import { FavoriteService } from 'src/app/services/favorite.service';
+
 
 @Component({
   selector: 'app-pokemon-detail',
   templateUrl: './pokemon-detail.page.html',
   styleUrls: ['./pokemon-detail.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonButton, IonIcon, 
     IonCardContent,
     IonCardSubtitle,
     IonCardTitle,
@@ -47,7 +40,8 @@ export class PokemonDetailPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private pokeApi: PokeapiService
+    private pokeApi: PokeapiService,
+    private favoriteService: FavoriteService
   ) {}
 
   ngOnInit() {
@@ -79,4 +73,17 @@ export class PokemonDetailPage implements OnInit {
   get pokemonStats(): any[] {
     return this.pokemon?.stats || [];
   }
+
+  get pokemonAbilities(): string {
+    return this.pokemon.abilities.map((a: any) => a.ability.name).join(', ');
+  }
+
+  isFavorite(): boolean {
+    return this.favoriteService.isFavorite(this.pokemon.name);
+  }
+
+  toggleFavorite() {
+    this.favoriteService.toggleFavorite(this.pokemon.name);
+  }
+
 }

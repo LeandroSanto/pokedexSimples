@@ -1,20 +1,31 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Pokédex</ion-title>
+
+    <ion-button [routerLink]="['/favorites']" expand="block" color="tertiary">
+      <ion-icon name="heart" slot="start"></ion-icon>
+      Meus Pokémons Favoritos
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">pokemon-list</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item *ngFor="let p of pokemonList" [routerLink]="['/pokemon-detail', p.name]">
-        <ion-label>{{ p.name | titlecase }}</ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-grid>
+    <ion-row>
+    <ion-col size="6" sizeMd="4" sizeLg="3" *ngFor="let pokemon of pokemonList">
+        <ion-card (click)="goToDetail(pokemon.name)" class="pokemon-card">
+          <img [src]="getImageUrl(pokemon.url)" alt="{{ pokemon.name }}">
+          <ion-card-header>
+            <ion-card-title>{{ pokemon.name | titlecase }}</ion-card-title>
+            <ion-card-subtitle>#{{ getPokemonId(pokemon.url) }}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="pagination-buttons">
+    <ion-button (click)="loadPrevious()" [disabled]="offset === 0">Anterior</ion-button>
+    <ion-button (click)="loadNext()">Próximo</ion-button>
+  </div>
 </ion-content>

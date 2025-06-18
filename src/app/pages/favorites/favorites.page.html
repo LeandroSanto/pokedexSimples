@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-list *ngIf="!isLoading">
+    <ion-item *ngFor="let p of favorites" [routerLink]="['/pokemon-detail', p.name]">
+      <ion-avatar slot="start">
+        <img [src]="p.sprites.front_default" alt="{{ p.name }}" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ p.name | titlecase }}</h2>
+        <p>#{{ p.id }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-spinner *ngIf="isLoading" name="dots"></ion-spinner>
+
+</ion-content>
