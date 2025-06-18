@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Pokédex</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">pokemon-list</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let p of pokemonList" [routerLink]="['/pokemon-detail', p.name]">
+        <ion-label>{{ p.name | titlecase }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-content>
